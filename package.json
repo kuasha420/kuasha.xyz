@@ -1,0 +1,20 @@
+{
+  "name": "kuasha-xyz",
+  "version": "1.0.0",
+  "description": "Personal canonical portfolio & systems architecture site of Arafat Zahan (kuasha420)",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m http.server 3333",
+    "dev": "python3 -m http.server 3333",
+    "test": "node test/verify-site.js"
+  },
+  "keywords": [
+    "systems-architect",
+    "founding-engineer",
+    "google-site-kit",
+    "portfolio",
+    "kuasha.xyz"
+  ],
+  "author": "Arafat Zahan <kuasha420@gmail.com>",
+  "license": "MIT"
+}

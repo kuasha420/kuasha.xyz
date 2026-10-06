@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Arafat Zahan — Principal Systems Architect & Founding Engineer | kuasha.xyz</title>
+  <meta name="description" content="Personal site of Arafat Zahan (kuasha420) — Principal Systems Architect & Founding Engineer. Technical lead on Google Site Kit (3M+ active websites, 236 merged PRs), lead architect of Jasper distributed media platform, co-founder of Motion Mechanics clinical hub, open-source maintainer with ~7,000 monthly npm downloads.">
+  <meta name="keywords" content="Arafat Zahan, kuasha420, kuasha.xyz, Systems Architect, Founding Engineer, Google Site Kit, 10up, Jasper, Motion Mechanics, React Native, Next.js, Distributed Systems, Arch Linux">
+  <meta name="author" content="Arafat Zahan">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kuasha.xyz">
+  <meta property="og:title" content="Arafat Zahan — Principal Systems Architect & Founding Engineer">
+  <meta property="og:description" content="Technical lead on Google Site Kit (3M+ active sites, 236 merged upstream PRs), architect of Jasper distributed streaming engine, co-founder of Motion Mechanics healthcare platform, open source maintainer (~7k/mo npm downloads).">
+  <meta property="og:image" content="assets/images/me.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Arafat Zahan — Principal Systems Architect & Founding Engineer">
+  <meta name="twitter:description" content="Technical lead on Google Site Kit (3M+ active sites, 236 merged upstream PRs), architect of Jasper distributed streaming engine, co-founder of Motion Mechanics healthcare platform.">
+  <meta name="twitter:image" content="assets/images/me.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Anti-FOUC Theme Initialization (MANDATORY per Modern Web Guidance) -->
+  <script>
+    {
+      const savedTheme = localStorage.getItem("color-scheme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        document.querySelector('meta[name="color-scheme"]').content = savedTheme;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <!-- Ambient Background Particle Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Top Scroll Progress Bar -->
+  <div id="scroll-progress-bar" role="progressbar" aria-label="Reading progress"></div>
+
+  <!-- NAVBAR -->
+  <header class="navbar" role="banner">
+    <div class="container nav-inner">
+      <a href="#top" class="brand" aria-label="kuasha.xyz Home">
+        <div class="brand-logo-hex">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span>kuasha<span style="color: var(--accent-cyan)">.xyz</span></span>
+        <span class="brand-badge">ARCHITECT</span>
+      </a>
+
+      <nav role="navigation" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#architecture" class="nav-link">Systems</a></li>
+          <li><a href="#resumes" class="nav-link">Resumes</a></li>
+          <li><a href="#opensource" class="nav-link">Open Source</a></li>
+          <li><a href="#journey" class="nav-link">Journey</a></li>
+          <li><a href="#skills" class="nav-link">Stack</a></li>
+          <li><a href="#terminal" class="nav-link">Terminal</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Command Palette Trigger -->
+        <button id="palette-trigger-btn" class="cmd-k-badge" aria-label="Open Command Palette (Cmd+K)">
+          <span>⌘</span><span>K</span>
+        </button>
+
+        <!-- Direct CV Download -->
+        <a href="assets/pdf/Arafat_Zahan_Curriculum_Vitae.pdf" class="btn btn-primary btn-sm" download="Arafat_Zahan_Curriculum_Vitae.pdf">
+          <span>📄</span><span>Get CV</span>
+        </a>
+
+        <!-- Tactile Audio Toggle -->
+        <button id="audio-toggle-btn" class="icon-btn" aria-label="Toggle tactile UI clicks" title="Toggle tactile sound synthesis">
+          <span class="audio-toggle-icon">🔇</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="icon-btn theme-toggle-btn" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+
+        <!-- Mobile Menu Hamburger -->
+        <button id="mobile-menu-btn" class="icon-btn mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Mobile Navigation Drawer">
+    <ul class="mobile-nav-list">
+      <li><a href="#architecture">🏛️ Systems Architecture</a></li>
+      <li><a href="#resumes">📑 Resume & CV Suite</a></li>
+      <li><a href="#opensource">📦 Open Source Packages</a></li>
+      <li><a href="#journey">⏳ Engineering Journey</a></li>
+      <li><a href="#skills">🛠️ Technical Competencies</a></li>
+      <li><a href="#terminal">💻 Interactive Terminal</a></li>
+      <li><a href="#contact">📫 Contact & Coordinates</a></li>
+      <li><a href="assets/pdf/Arafat_Zahan_Curriculum_Vitae.pdf" download>📄 Download Curriculum Vitae</a></li>
+    </ul>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main id="top">
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="status-beacon-wrap">
+              <span class="status-pulse-dot"></span>
+              <span>AVAILABLE FOR PRINCIPAL SYSTEMS & FOUNDING ROLES • UTC+6</span>
+            </div>
+
+            <h1 class="hero-title">
+              Engineering <span class="hero-title-accent">Fault-Tolerant Platforms</span> & High-Scale Systems
+            </h1>
+
+            <p class="hero-desc">
+              <strong>Arafat Zahan</strong> (<code>kuasha420</code>) is a Principal Systems Architect and Founding Engineer with 6+ years of professional engineering experience (building software since 2012). Former technical lead on <strong>Google Site Kit</strong> at 10up (3M+ active sites, 236 merged upstream PRs, 10up Summit Uppie Award). Lead architect of <strong>Jasper</strong> distributed media streaming engine (&gt;90% throttle reduction). Co-founder and platform architect of <strong>Motion Mechanics</strong> outpatient rehabilitation clinic (100% paperless). Published open-source author with ~7,000 monthly npm downloads.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#architecture" class="btn btn-primary">
+                <span>🏛️</span><span>Explore Systems</span>
+              </a>
+              <a href="#resumes" class="btn btn-secondary">
+                <span>📑</span><span>Resume Tracks (4)</span>
+              </a>
+              <a href="#terminal" class="btn btn-secondary">
+                <span>💻</span><span>Live Terminal</span>
+              </a>
+              <a href="https://github.com/kuasha420" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                <span>🐙</span><span>GitHub</span>
+              </a>
+              <a href="https://www.linkedin.com/in/arafat-zahan-a03502394/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                <span>💼</span><span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-avatar-card">
+            <img src="assets/images/me.jpg" alt="Arafat Zahan — Principal Systems Architect" class="hero-avatar-img" width="280" height="330" loading="eager">
+            <div class="hero-avatar-badge">
+              <span>Arafat Zahan // kuasha420</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS / METRICS BANNER -->
+        <div class="stats-banner">
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-metric stat-metric-cyan">3M+</div>
+              <div class="stat-label">Active Websites (Google Site Kit)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-metric stat-metric-blue">236</div>
+              <div class="stat-label">Merged Google Upstream PRs</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-metric stat-metric-emerald">&gt;90%</div>
+              <div class="stat-label">Audio Throttling Reduction (Jasper)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-metric stat-metric-amber">~7,000</div>
+              <div class="stat-label">Monthly npm Downloads</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-metric stat-metric-cyan">18-Person</div>
+              <div class="stat-label">Clinic & Platform Co-Founded</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELEMETRY STRIP -->
+    <div class="telemetry-ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item"><span class="ticker-key">UPSTREAM:</span> google/site-kit-wp (236 PRs merged, 3M+ active sites)</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">MEDIA DAEMON:</span> yt-dlp & FFmpeg worker pool (&gt;90% throttle drop)</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">HEALTHCARE:</span> Motion Mechanics & Sunshine Physio (100% paperless platform)</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">NPM PACKAGES:</span> ~7,000 monthly downloads across 4 libraries</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">KERNEL FABRIC:</span> Arch Linux / Wayland / PipeWire 8kHz baseband bridge</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">HARDWARE ISOLATION:</span> jimha Linux evdev child input shield</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">THE HORIZON:</span> ChickenTech (Edge IoT precision agriculture automation)</span>
+        <span class="ticker-sep">///</span>
+        <!-- Duplicated for seamless loop -->
+        <span class="ticker-item"><span class="ticker-key">UPSTREAM:</span> google/site-kit-wp (236 PRs merged, 3M+ active sites)</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">MEDIA DAEMON:</span> yt-dlp & FFmpeg worker pool (&gt;90% throttle drop)</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">HEALTHCARE:</span> Motion Mechanics & Sunshine Physio (100% paperless platform)</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">NPM PACKAGES:</span> ~7,000 monthly downloads across 4 libraries</span>
+        <span class="ticker-sep">///</span>
+        <span class="ticker-item"><span class="ticker-key">KERNEL FABRIC:</span> Arch Linux / Wayland / PipeWire 8kHz baseband bridge</span>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE VISUALIZER SECTION -->
+    <section class="section" id="architecture">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Interactive Systems Engine</span>
+          <h2 class="section-title">Core Architectural Blueprints</h2>
+          <p class="section-subtitle">
+            Inspect real-world production architectures designed and implemented by Arafat Zahan. Click on any component to inspect data flow, design rationale, and verified metrics.
+          </p>
+        </div>
+
+        <div class="arch-card">
+          <!-- Architecture Tabs -->
+          <div class="arch-tabs" id="arch-tabs" role="tablist">
+            <button class="arch-tab-btn active" data-system="sitekit" role="tab" aria-selected="true">
+              <span>🌐</span><span>Google Site Kit @ Scale</span>
+            </button>
+            <button class="arch-tab-btn" data-system="jasper" role="tab" aria-selected="false">
+              <span>⚡</span><span>Jasper Media Platform & SaaS</span>
+            </button>
+            <button class="arch-tab-btn" data-system="healthcare" role="tab" aria-selected="false">
+              <span>🏥</span><span>Clinical Platform (Motion Mechanics)</span>
+            </button>
+            <button class="arch-tab-btn" data-system="hardware" role="tab" aria-selected="false">
+              <span>🛰️</span><span>Low-Level Systems & Edge Computing</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Diagram Container -->
+          <div id="arch-diagram"></div>
+
+          <!-- Dynamic Component Inspector -->
+          <div id="arch-inspector" style="margin-top: 24px;"></div>
+
+          <!-- Simulation Toolbar -->
+          <div class="arch-sim-toolbar">
+            <div id="arch-sim-status" class="arch-sim-status">System state: Nominal • Ready for interactive probe</div>
+            <button id="arch-sim-btn" class="btn btn-outline-cyan btn-sm">
+              <span>⚡</span><span>Simulate Component Event</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME & CV SUITE SECTION -->
+    <section class="section" id="resumes">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Curated Career Artifacts</span>
+          <h2 class="section-title">Resume & Dossier Suite</h2>
+          <p class="section-subtitle">
+            Select a specialized track tailored to specific engineering roles, or download the comprehensive, factually verified curriculum vitae.
+          </p>
+        </div>
+
+        <div class="resumes-grid">
+          <!-- Track Selector Column -->
+          <div class="resume-tabs-col" role="tablist">
+            <button class="resume-track-nav-btn active" data-resume-track="systems" role="tab" aria-selected="true">
+              <div class="resume-track-name">Principal Systems Architect</div>
+              <div class="resume-track-role">High-scale web platforms & distributed clusters</div>
+            </button>
+            <button class="resume-track-nav-btn" data-resume-track="founding" role="tab" aria-selected="false">
+              <div class="resume-track-name">Founding Engineer / Head of Eng</div>
+              <div class="resume-track-role">Zero-to-one company building & clinical launch</div>
+            </button>
+            <button class="resume-track-nav-btn" data-resume-track="staff" role="tab" aria-selected="false">
+              <div class="resume-track-name">Staff Full-Stack Engineer</div>
+              <div class="resume-track-role">TypeScript, React, Next.js & DX leadership</div>
+            </button>
+            <button class="resume-track-nav-btn" data-resume-track="comprehensive" role="tab" aria-selected="false">
+              <div class="resume-track-name">Curriculum Vitae (Complete)</div>
+              <div class="resume-track-role">Full chronicle, 236 PRs context & training</div>
+            </button>
+          </div>
+
+          <!-- Track Display Card -->
+          <div class="resume-view-card">
+            <div class="resume-view-header">
+              <h3 class="resume-view-title" id="resume-track-title">Principal Systems Architect</h3>
+              <p class="resume-view-tagline" id="resume-track-tagline">High-scale web platforms, distributed media engines & fault-tolerant cluster architectures.</p>
+            </div>
+
+            <ul class="resume-highlights-list" id="resume-track-highlights">
+              <!-- Dynamically populated by app.js -->
+            </ul>
+
+            <div class="resume-actions-row">
+              <a href="assets/pdf/Arafat_Zahan_Systems_Architect_CV.pdf" id="resume-track-download-btn" class="btn btn-primary" download>
+                <span>📥</span><span>Download Track PDF</span>
+              </a>
+              <a href="assets/pdf/Arafat_Zahan_Curriculum_Vitae.pdf" class="btn btn-secondary" download>
+                <span>📑</span><span>Get Complete CV (148KB)</span>
+              </a>
+              <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">
+                Verified against git ledgers & official records
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPEN SOURCE ECOSYSTEM SECTION -->
+    <section class="section" id="opensource">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Open Source Ecosystem</span>
+          <h2 class="section-title">Published Libraries & Hardware Tools</h2>
+          <p class="section-subtitle">
+            Maintained open-source packages trusted by developers worldwide, generating approximately 7,000 monthly downloads.
+          </p>
+        </div>
+
+        <div class="oss-stats-summary">
+          <div class="oss-summary-pill">
+            <span>📦</span>
+            <span>~7,000 Total Monthly npm Downloads</span>
+          </div>
+          <div class="oss-summary-pill">
+            <span>🐧</span>
+            <span>Arch Linux AUR & Linux evdev Maintainer</span>
+          </div>
+        </div>
+
+        <div class="oss-cards-grid">
+          <!-- Package 1: react-native-paper-phone-number-input -->
+          <div class="oss-pkg-card">
+            <div>
+              <div class="oss-pkg-top">
+                <h3 class="oss-pkg-title">react-native-paper-phone-number-input</h3>
+                <span class="oss-pkg-badge">~4,100 / mo</span>
+              </div>
+              <p class="oss-pkg-desc">
+                High-performance international phone number input component with responsive country search modal, localized flag icons, and seamless Material Design integration.
+              </p>
+            </div>
+            <div>
+              <div class="oss-pkg-install">
+                <code>npm i react-native-paper-phone-number-input</code>
+                <button class="oss-copy-btn" data-copy="npm i react-native-paper-phone-number-input" data-feedback="Install command copied!" title="Copy install command">📋</button>
+              </div>
+              <div class="oss-pkg-footer">
+                <div class="oss-pkg-links">
+                  <a href="https://www.npmjs.com/package/react-native-paper-phone-number-input" target="_blank" rel="noopener noreferrer" class="oss-link">npm ↗</a>
+                  <a href="https://github.com/kuasha420/react-native-paper-phone-number-input" target="_blank" rel="noopener noreferrer" class="oss-link">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package 2: react-native-paper-toast -->
+          <div class="oss-pkg-card">
+            <div>
+              <div class="oss-pkg-top">
+                <h3 class="oss-pkg-title">react-native-paper-toast</h3>
+                <span class="oss-pkg-badge">~2,140 / mo</span>
+              </div>
+              <p class="oss-pkg-desc">
+                Imperative toast notification engine, context provider, and custom hook for React Native Paper. Trigger lightweight toast notifications without component state boilerplate.
+              </p>
+            </div>
+            <div>
+              <div class="oss-pkg-install">
+                <code>npm i react-native-paper-toast</code>
+                <button class="oss-copy-btn" data-copy="npm i react-native-paper-toast" data-feedback="Install command copied!" title="Copy install command">📋</button>
+              </div>
+              <div class="oss-pkg-footer">
+                <div class="oss-pkg-links">
+                  <a href="https://www.npmjs.com/package/react-native-paper-toast" target="_blank" rel="noopener noreferrer" class="oss-link">npm ↗</a>
+                  <a href="https://github.com/kuasha420/react-native-paper-toast" target="_blank" rel="noopener noreferrer" class="oss-link">GitHub ↗</a>
+                </div>
+                <button id="demo-trigger-toast" class="btn btn-outline-cyan btn-sm" title="Test in-browser toast">
+                  <span>🔔</span><span>Live Toast Demo</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package 3: react-native-paper-alerts -->
+          <div class="oss-pkg-card">
+            <div>
+              <div class="oss-pkg-top">
+                <h3 class="oss-pkg-title">react-native-paper-alerts</h3>
+                <span class="oss-pkg-badge">~520 / mo</span>
+              </div>
+              <p class="oss-pkg-desc">
+                Cross-platform imperative alert and confirmation modal dialog provider for React Native on iOS, Android, and Web with native Material Design styling.
+              </p>
+            </div>
+            <div>
+              <div class="oss-pkg-install">
+                <code>npm i react-native-paper-alerts</code>
+                <button class="oss-copy-btn" data-copy="npm i react-native-paper-alerts" data-feedback="Install command copied!" title="Copy install command">📋</button>
+              </div>
+              <div class="oss-pkg-footer">
+                <div class="oss-pkg-links">
+                  <a href="https://www.npmjs.com/package/react-native-paper-alerts" target="_blank" rel="noopener noreferrer" class="oss-link">npm ↗</a>
+                  <a href="https://github.com/kuasha420/react-native-paper-alerts" target="_blank" rel="noopener noreferrer" class="oss-link">GitHub ↗</a>
+                </div>
+                <button id="demo-trigger-alert" class="btn btn-outline-cyan btn-sm" title="Test in-browser alert modal">
+                  <span>⚠️</span><span>Live Alert Demo</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package 4: mst-persistent-store -->
+          <div class="oss-pkg-card">
+            <div>
+              <div class="oss-pkg-top">
+                <h3 class="oss-pkg-title">mst-persistent-store</h3>
+                <span class="oss-pkg-badge">~240 / mo</span>
+              </div>
+              <p class="oss-pkg-desc">
+                Persistent MobX-State-Tree store provider and custom consumer hooks with automated AsyncStorage and LocalStorage hydration for React and React Native.
+              </p>
+            </div>
+            <div>
+              <div class="oss-pkg-install">
+                <code>npm i mst-persistent-store</code>
+                <button class="oss-copy-btn" data-copy="npm i mst-persistent-store" data-feedback="Install command copied!" title="Copy install command">📋</button>
+              </div>
+              <div class="oss-pkg-footer">
+                <div class="oss-pkg-links">
+                  <a href="https://www.npmjs.com/package/mst-persistent-store" target="_blank" rel="noopener noreferrer" class="oss-link">npm ↗</a>
+                  <a href="https://github.com/kuasha420/mst-persistent-store" target="_blank" rel="noopener noreferrer" class="oss-link">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package 5: jimha -->
+          <div class="oss-pkg-card">
+            <div>
+              <div class="oss-pkg-top">
+                <h3 class="oss-pkg-title">jimha (Child Hardware Shield)</h3>
+                <span class="oss-pkg-badge">Linux evdev</span>
+              </div>
+              <p class="oss-pkg-desc">
+                Linux evdev input interceptor written in Python for toddler hardware isolation. Captures and absorbs raw <code>/dev/input</code> key events to protect the host OS while providing sensory audiovisual feedback.
+              </p>
+            </div>
+            <div>
+              <div class="oss-pkg-install">
+                <code>git clone https://github.com/kuasha420/jimha</code>
+                <button class="oss-copy-btn" data-copy="git clone https://github.com/kuasha420/jimha" data-feedback="Repo clone command copied!" title="Copy clone command">📋</button>
+              </div>
+              <div class="oss-pkg-footer">
+                <div class="oss-pkg-links">
+                  <a href="https://github.com/kuasha420/jimha" target="_blank" rel="noopener noreferrer" class="oss-link">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package 6: antigravity-manager-bin -->
+          <div class="oss-pkg-card">
+            <div>
+              <div class="oss-pkg-top">
+                <h3 class="oss-pkg-title">antigravity-manager-bin</h3>
+                <span class="oss-pkg-badge">Arch AUR</span>
+              </div>
+              <p class="oss-pkg-desc">
+                Arch Linux User Repository (AUR) package maintainer for Google Antigravity developer workflow and environment tools. Automated PKGBUILD maintenance and upstream packaging.
+              </p>
+            </div>
+            <div>
+              <div class="oss-pkg-install">
+                <code>paru -S antigravity-manager-bin</code>
+                <button class="oss-copy-btn" data-copy="paru -S antigravity-manager-bin" data-feedback="AUR install command copied!" title="Copy install command">📋</button>
+              </div>
+              <div class="oss-pkg-footer">
+                <div class="oss-pkg-links">
+                  <a href="https://aur.archlinux.org/packages/antigravity-manager-bin" target="_blank" rel="noopener noreferrer" class="oss-link">AUR ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAREER JOURNEY TIMELINE -->
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Engineering Trajectory</span>
+          <h2 class="section-title">Milestones & Journey</h2>
+          <p class="section-subtitle">
+            From exploring Linux kernels and bare-metal servers in 2012 to leading Google Site Kit engineering and co-founding production platforms.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <!-- Milestone 1 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">OCT 2025 – PRESENT</span>
+                <span class="timeline-badge">Co-Founder & Head of Eng</span>
+              </div>
+              <h3 class="timeline-title">Purrfect Software Limited & Motion Mechanics Hub</h3>
+              <div class="timeline-company">Purrfect Software Limited • Savar, Dhaka & Remote</div>
+              <p class="timeline-desc">
+                Directing engineering and architecture across an 18-person cross-disciplinary team. Architected the <strong>Jasper Media Platform</strong> distributed audio streaming engine (&gt;90% throttle reduction via externalized yt-dlp/FFmpeg daemon) and Hosted Jasper SaaS control plane. Co-founded the Motion Mechanics physical outpatient clinic in Savar, directing physical launch and architecting its 100% paperless platform on Next.js 15, Turborepo, tRPC, and PostgreSQL. Architecting Sunshine Physio dual-stack web/mobile application (Next.js 16 + Expo).
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 2 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">SEP 2024 – OCT 2025</span>
+                <span class="timeline-badge">Strategic R&D Break</span>
+              </div>
+              <h3 class="timeline-title">Family & Technical R&D Career Break</h3>
+              <div class="timeline-company">Independent R&D • Savar, Dhaka</div>
+              <p class="timeline-desc">
+                Deliberate, intentional career break from high-stakes delivery to focus on family commitments, supporting spouse's degree completion, and fatherhood. Conducted deep independent research in AI-amplified software engineering, local LLM orchestration, and modern monorepo architectures. Formulated the architectural blueprints that established Purrfect Software Limited.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 3 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">AUG 2021 – SEP 2024</span>
+                <span class="timeline-badge">Google Site Kit Technical Lead</span>
+              </div>
+              <h3 class="timeline-title">10up — Senior JavaScript Engineer (React / Full-Stack)</h3>
+              <div class="timeline-company">10up • Remote (Global)</div>
+              <p class="timeline-desc">
+                Dedicated engineering lead partnering with Google on <strong>Site Kit by Google</strong> (<code>google/site-kit-wp</code>), powering <strong>3M+ production websites</strong>. Authored <strong>236 merged pull requests</strong> in Google's upstream repository. Authored two canonical Google-approved technical design documents: <em>User Input v2</em> and <em>Ad Blocking Recovery (ABR)</em>. Unified cross-product tag detection in the Existing Tags Simplification (ETS) epic. Awarded the <strong>10up Summit "Uppie" Award</strong> in Reykjavik, Iceland (May 2023) for engineering excellence.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 4 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">FEB 2020 – AUG 2021</span>
+                <span class="timeline-badge">JavaScript Engineer & Founder</span>
+              </div>
+              <h3 class="timeline-title">Star IT Limited & Aladdin Studios</h3>
+              <div class="timeline-company">Star IT Limited • Aladdin Studios • Dhaka, Bangladesh</div>
+              <p class="timeline-desc">
+                Directed engineering across production applications spanning telemedicine, matrimony, and ISP enterprise systems. Built the <strong>Priyojon Care Telemedicine Suite</strong> (real-time doctor consultations, electronic prescriptions, home healthcare dispatch). Published foundational open-source component libraries on npm, resulting in direct recruitment on GitHub by 10up's Head of Engineering.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 5 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">APR 2018 – FEB 2020</span>
+                <span class="timeline-badge">Academic Leadership</span>
+              </div>
+              <h3 class="timeline-title">Savar Digital Polytechnic Institute</h3>
+              <div class="timeline-company">Department of Computer Technology • Dhaka, Bangladesh</div>
+              <p class="timeline-desc">
+                Junior Instructor lecturing diploma engineering students in C/C++, JavaScript, PHP, database schema design, and computer networking. Supervised hands-on laboratory sessions covering operating systems and routing protocols.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 6 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">2017 – 2018</span>
+                <span class="timeline-badge">Enterprise Systems Training</span>
+              </div>
+              <h3 class="timeline-title">Red Hat System Administration (RHCE) & Cisco Networking (CCNA)</h3>
+              <div class="timeline-company">IT Bangla Limited • Dhaka, Bangladesh</div>
+              <p class="timeline-desc">
+                Rigorous enterprise systems and network engineering curricula. Mastered systemd service management, advanced networking, server hardening, routing protocols (OSPF, EIGRP), subnetting, and TCP/IP stack architecture.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 7 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">2012 – 2017</span>
+                <span class="timeline-badge">Origins & Foundation</span>
+              </div>
+              <h3 class="timeline-title">Linux Kernels, Freelance & Diploma in Computer Technology</h3>
+              <div class="timeline-company">Savar Digital Polytechnic Institute (2013–2017) & Independent</div>
+              <p class="timeline-desc">
+                Started building software and exploring Linux kernels in 2012. Conferred 4-Year Diploma in Computer Technology. Built open-source WordPress plugins published to WordPress.org (2014), raw PHP B2B licensing engines with cryptographic verification, and early hybrid mobile applications (Cordova/PhoneGap) on bare-metal Linux servers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNICAL COMPETENCIES & STACK -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Technical Depth</span>
+          <h2 class="section-title">Competencies & Capabilities</h2>
+          <p class="section-subtitle">
+            Battle-tested technologies and architectural patterns verified through production deployments at mass scale.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <!-- Category 1 -->
+          <div class="skills-category-card">
+            <h3 class="skills-cat-title"><span>🏛️</span> Architecture & Distributed</h3>
+            <div class="skills-pills-wrap">
+              <span class="skill-pill">Distributed Sharding</span>
+              <span class="skill-pill">Concurrency Leases</span>
+              <span class="skill-pill">Worker Drain Contracts</span>
+              <span class="skill-pill">Hexagonal Architecture</span>
+              <span class="skill-pill">Transactional Outbox</span>
+              <span class="skill-pill">SaaS Control Planes</span>
+              <span class="skill-pill">Subprocess Streaming</span>
+              <span class="skill-pill">Event-Driven Gateways</span>
+            </div>
+          </div>
+
+          <!-- Category 2 -->
+          <div class="skills-category-card">
+            <h3 class="skills-cat-title"><span>💻</span> Languages & Runtimes</h3>
+            <div class="skills-pills-wrap">
+              <span class="skill-pill">TypeScript (Advanced)</span>
+              <span class="skill-pill">JavaScript (ESNext)</span>
+              <span class="skill-pill">Node.js (Fastify, Express)</span>
+              <span class="skill-pill">Python 3 (evdev, async)</span>
+              <span class="skill-pill">PHP 7.4 – 8.3</span>
+              <span class="skill-pill">Shell / Bash Scripting</span>
+              <span class="skill-pill">SQL (PostgreSQL, MySQL)</span>
+            </div>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="skills-category-card">
+            <h3 class="skills-cat-title"><span>🌐</span> Web & Frontend Platforms</h3>
+            <div class="skills-pills-wrap">
+              <span class="skill-pill">React 18 & 19</span>
+              <span class="skill-pill">Next.js 15 & 16 (App Router)</span>
+              <span class="skill-pill">React Server Components</span>
+              <span class="skill-pill">Turborepo</span>
+              <span class="skill-pill">Tailwind CSS</span>
+              <span class="skill-pill">tRPC v11</span>
+              <span class="skill-pill">Storybook</span>
+              <span class="skill-pill">TanStack Query</span>
+            </div>
+          </div>
+
+          <!-- Category 4 -->
+          <div class="skills-category-card">
+            <h3 class="skills-cat-title"><span>📱</span> Mobile & Cross-Platform</h3>
+            <div class="skills-pills-wrap">
+              <span class="skill-pill">React Native</span>
+              <span class="skill-pill">Expo & Expo Router</span>
+              <span class="skill-pill">React Native Paper</span>
+              <span class="skill-pill">Native Android Bridges</span>
+              <span class="skill-pill">React Navigation</span>
+              <span class="skill-pill">Cross-Platform Dialogs</span>
+              <span class="skill-pill">Mobile Internationalization</span>
+            </div>
+          </div>
+
+          <!-- Category 5 -->
+          <div class="skills-category-card">
+            <h3 class="skills-cat-title"><span>🗄️</span> Databases & Persistence</h3>
+            <div class="skills-pills-wrap">
+              <span class="skill-pill">PostgreSQL 15/16/17</span>
+              <span class="skill-pill">Drizzle ORM</span>
+              <span class="skill-pill">Prisma ORM</span>
+              <span class="skill-pill">Redis (Leases & TTLs)</span>
+              <span class="skill-pill">MySQL</span>
+              <span class="skill-pill">Checksum-Tracked Migrations</span>
+            </div>
+          </div>
+
+          <!-- Category 6 -->
+          <div class="skills-category-card">
+            <h3 class="skills-cat-title"><span>🐧</span> Linux Systems & DevOps</h3>
+            <div class="skills-pills-wrap">
+              <span class="skill-pill">Arch Linux</span>
+              <span class="skill-pill">systemd Services</span>
+              <span class="skill-pill">PipeWire Audio Bridge</span>
+              <span class="skill-pill">Docker & Containers</span>
+              <span class="skill-pill">Google Cloud Platform</span>
+              <span class="skill-pill">GitHub Actions CI/CD</span>
+              <span class="skill-pill">Wayland & KRDP</span>
+              <span class="skill-pill">BackstopJS VRT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE SYSTEM TERMINAL -->
+    <section class="section" id="terminal">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Interactive CLI</span>
+          <h2 class="section-title">Live Systems Console</h2>
+          <p class="section-subtitle">
+            Query the architecture directly using the embedded terminal. Try typing <code>sitekit</code>, <code>jasper</code>, <code>npm</code>, <code>matrix</code>, or click any chip below.
+          </p>
+        </div>
+
+        <div class="terminal-window">
+          <!-- Terminal Titlebar -->
+          <div class="terminal-titlebar">
+            <div class="terminal-dots">
+              <span class="term-dot term-dot-red"></span>
+              <span class="term-dot term-dot-yellow"></span>
+              <span class="term-dot term-dot-green"></span>
+            </div>
+            <span class="terminal-title-text">kuasha@kuasha-z490ud: ~/systems</span>
+            <span style="font-size: 0.72rem; font-family: var(--font-mono); color: #64748b;">bash 5.2</span>
+          </div>
+
+          <!-- Quick Action Chips -->
+          <div class="terminal-chips-bar">
+            <button class="terminal-chip" data-cmd="whoami">whoami</button>
+            <button class="terminal-chip" data-cmd="sitekit">sitekit</button>
+            <button class="terminal-chip" data-cmd="jasper">jasper</button>
+            <button class="terminal-chip" data-cmd="clinic">clinic</button>
+            <button class="terminal-chip" data-cmd="npm">npm</button>
+            <button class="terminal-chip" data-cmd="cv">cv</button>
+            <button class="terminal-chip" data-cmd="skills">skills</button>
+            <button class="terminal-chip" data-cmd="matrix">matrix</button>
+            <button class="terminal-chip" data-cmd="clear">clear</button>
+          </div>
+
+          <!-- Terminal Body & History -->
+          <div class="terminal-body" id="terminal-body">
+            <div id="terminal-output" class="terminal-output">
+              <!-- Dynamically populated -->
+            </div>
+
+            <div class="terminal-input-row">
+              <span class="term-prompt">kuasha:~$</span>
+              <form id="terminal-form" autocomplete="off">
+                <input type="text" id="terminal-input" class="terminal-input-field" placeholder="Type a command (try 'help')..." aria-label="Terminal command input" spellcheck="false" autocapitalize="off">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIRECT CONTACT & COORDINATES -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Direct Ingress</span>
+          <h2 class="section-title">Coordinates & Contact</h2>
+          <p class="section-subtitle">
+            Ready to discuss Principal Systems Architect positions, Founding Engineer roles, or high-scale platform challenges.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Card 1: Email -->
+          <div class="contact-card">
+            <div class="contact-card-icon">📫</div>
+            <h3 class="contact-card-title">Direct Email</h3>
+            <div class="contact-card-val">kuasha420@gmail.com</div>
+            <div style="display: flex; gap: 8px;">
+              <button class="contact-action-btn" data-copy="kuasha420@gmail.com" data-feedback="Email copied to clipboard!">
+                <span>📋</span><span>Copy Email</span>
+              </button>
+              <a href="mailto:kuasha420@gmail.com" class="contact-action-btn">
+                <span>✉️</span><span>Open Mail</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: WhatsApp / Phone -->
+          <div class="contact-card">
+            <div class="contact-card-icon">💬</div>
+            <h3 class="contact-card-title">WhatsApp & Phone</h3>
+            <div class="contact-card-val">+880 1841 832 034</div>
+            <div style="display: flex; gap: 8px;">
+              <button class="contact-action-btn" data-copy="+8801841832034" data-feedback="Phone number copied!">
+                <span>📋</span><span>Copy Number</span>
+              </button>
+              <a href="https://wa.me/8801841832034" target="_blank" rel="noopener noreferrer" class="contact-action-btn">
+                <span>🟢</span><span>WhatsApp Chat</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3: Location & Live Time -->
+          <div class="contact-card">
+            <div class="contact-card-icon">🌐</div>
+            <h3 class="contact-card-title">Location & Timezone</h3>
+            <div class="contact-card-val" id="live-time-display">--:--:-- BST (UTC+6)</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+              Savar, Dhaka, Bangladesh • Flexible overlap with North America (EST/PST) & Europe (GMT/CET).
+            </p>
+            <span class="status-pulse-dot" style="display: inline-block; vertical-align: middle;"></span>
+            <span style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--accent-emerald); margin-left: 6px;">Available for Global Distributed Teams</span>
+          </div>
+
+          <!-- Card 4: Profiles -->
+          <div class="contact-card">
+            <div class="contact-card-icon">🔗</div>
+            <h3 class="contact-card-title">Verified Profiles</h3>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+              <a href="https://github.com/kuasha420" target="_blank" rel="noopener noreferrer" class="contact-action-btn">
+                <span>🐙</span><span>GitHub (@kuasha420)</span>
+              </a>
+              <a href="https://www.linkedin.com/in/arafat-zahan-a03502394/" target="_blank" rel="noopener noreferrer" class="contact-action-btn">
+                <span>💼</span><span>LinkedIn (Arafat Zahan)</span>
+              </a>
+              <a href="https://www.npmjs.com/~kuasha420" target="_blank" rel="noopener noreferrer" class="contact-action-btn">
+                <span>📦</span><span>npm Profile (~7k/mo)</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-copy">
+        © 2026 <strong>Arafat Zahan</strong> (<code>kuasha420</code>). Canonical Home at <strong>kuasha.xyz</strong>.
+        <br>
+        <span style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-dim);">
+          Engineered with vanilla modern web standards • Zero bloat • Sub-second latency.
+        </span>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="#hero">Top</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#resumes">Resumes</a></li>
+        <li><a href="#opensource">Open Source</a></li>
+        <li><a href="#terminal">Terminal</a></li>
+        <li><a href="https://github.com/kuasha420" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- COMMAND PALETTE SPOTLIGHT MODAL -->
+  <div id="command-palette-modal" class="palette-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="palette-dialog">
+      <div class="palette-input-wrap">
+        <span class="palette-search-icon">🔍</span>
+        <input type="text" id="palette-input" class="palette-input" placeholder="Type a destination or action (e.g. 'resume', 'sitekit', 'email')..." aria-label="Command Palette input" autocomplete="off" spellcheck="false">
+      </div>
+      <ul id="palette-results" class="palette-results-list" role="listbox">
+        <!-- Dynamically rendered -->
+      </ul>
+      <div class="palette-footer">
+        <div class="palette-kbd-group">
+          <span><span class="kbd">↑</span> <span class="kbd">↓</span> navigate</span>
+          <span><span class="kbd">↵</span> select</span>
+          <span><span class="kbd">esc</span> close</span>
+        </div>
+        <span>kuasha.xyz spotlight</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOBAL ALERT MODAL (Used for Interactive Alert Demo) -->
+  <div id="global-alert-modal" class="alert-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="alert-modal-title">
+    <div class="alert-modal-box">
+      <h3 id="alert-modal-title" class="alert-modal-title">Notice</h3>
+      <p id="alert-modal-msg" class="alert-modal-msg"></p>
+      <div class="alert-modal-actions">
+        <button id="alert-modal-cancel" class="btn btn-secondary btn-sm">Cancel</button>
+        <button id="alert-modal-confirm" class="btn btn-primary btn-sm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="assets/js/audio.js"></script>
+  <script src="assets/js/architecture.js"></script>
+  <script src="assets/js/terminal.js"></script>
+  <script src="assets/js/command-palette.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
