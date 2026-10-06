@@ -5,7 +5,14 @@
 class SoundEngine {
   constructor() {
     this.ctx = null;
-    this.enabled = false; // Muted by default for polite UX
+    let saved = null;
+    try {
+      saved = localStorage.getItem("audio-enabled");
+    } catch {}
+    this.enabled = saved === "true"; // Defaults false unless user enabled
+    if (this.enabled) {
+      this.attachUnlockListener();
+    }
   }
 
   init() {
@@ -17,8 +24,26 @@ class SoundEngine {
     }
   }
 
+  attachUnlockListener() {
+    if (typeof window === 'undefined') return;
+    const unlock = () => {
+      this.init();
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      window.removeEventListener('pointerdown', unlock);
+      window.removeEventListener('keydown', unlock);
+    };
+    window.addEventListener('pointerdown', unlock, { passive: true });
+    window.addEventListener('keydown', unlock, { passive: true });
+  }
+
   toggle() {
     this.enabled = !this.enabled;
+    try {
+      localStorage.setItem("audio-enabled", String(this.enabled));
+    } catch {}
+
     if (this.enabled) {
       this.init();
       if (this.ctx && this.ctx.state === 'suspended') {
@@ -30,7 +55,9 @@ class SoundEngine {
   }
 
   playClick() {
-    if (!this.enabled || !this.ctx) return;
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
     try {
       if (this.ctx.state === 'suspended') {
         this.ctx.resume();
@@ -57,7 +84,9 @@ class SoundEngine {
   }
 
   playBeep(freq = 440, duration = 0.08, vol = 0.03) {
-    if (!this.enabled || !this.ctx) return;
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
     try {
       if (this.ctx.state === 'suspended') {
         this.ctx.resume();
@@ -87,6 +116,12 @@ class SoundEngine {
     this.playBeep(523.25, 0.06, 0.03);
     setTimeout(() => this.playBeep(659.25, 0.08, 0.03), 50);
     setTimeout(() => this.playBeep(783.99, 0.12, 0.04), 100);
+  }
+
+  playError() {
+    if (!this.enabled) return;
+    this.playBeep(260, 0.08, 0.04);
+    setTimeout(() => this.playBeep(220, 0.12, 0.04), 70);
   }
 }
 

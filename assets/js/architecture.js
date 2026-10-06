@@ -252,6 +252,7 @@ class ArchitectureVisualizer {
     this.currentSystem = "sitekit";
     this.selectedNodeId = null;
     this.isSimulating = false;
+    this.simTimeouts = [];
   }
 
   init() {
@@ -287,6 +288,17 @@ class ArchitectureVisualizer {
   }
 
   renderSystem(systemId) {
+    // Clear any running simulation timers to prevent ghost updates on the new tab
+    if (this.simTimeouts.length > 0) {
+      this.simTimeouts.forEach(t => clearTimeout(t));
+      this.simTimeouts = [];
+      this.isSimulating = false;
+      if (this.simButton) {
+        this.simButton.disabled = false;
+        this.simButton.classList.remove("anim-pulse");
+      }
+    }
+
     this.currentSystem = systemId;
     const system = ARCHITECTURE_DATA[systemId];
     if (!system) return;
@@ -314,7 +326,7 @@ class ArchitectureVisualizer {
 
     // Update Simulation button label
     if (this.simButton && system.simulation) {
-      this.simButton.textContent = "⚡ " + system.simulation.actionLabel;
+      this.simButton.innerHTML = `<span>⚡</span><span>${system.simulation.actionLabel}</span>`;
     }
     if (this.simStatus) {
       this.simStatus.textContent = "System state: Nominal • Ready for interactive probe";
@@ -343,6 +355,13 @@ class ArchitectureVisualizer {
       `;
     });
 
+    const pipelineStripHtml = system.nodes.map((node, i) => `
+      <span class="arch-pipeline-step-badge">
+        <span>0${i + 1}</span> <span>${node.role}</span>
+      </span>
+      ${i < system.nodes.length - 1 ? '<span class="arch-pipeline-arrow">➔</span>' : ''}
+    `).join('');
+
     this.diagramContainer.innerHTML = `
       <div class="arch-pipeline-meta">
         <div>
@@ -350,6 +369,10 @@ class ArchitectureVisualizer {
           <p class="arch-sys-summary">${system.summary}</p>
         </div>
         <div class="arch-sys-badge">${system.badge}</div>
+      </div>
+
+      <div class="arch-pipeline-strip" aria-label="Architecture Pipeline Progression">
+        ${pipelineStripHtml}
       </div>
 
       <div class="arch-nodes-grid">
@@ -446,18 +469,21 @@ class ArchitectureVisualizer {
     // Flash nodes in sequence
     const nodes = this.diagramContainer.querySelectorAll(".arch-node-card");
     nodes.forEach((n, idx) => {
-      setTimeout(() => {
+      const t1 = setTimeout(() => {
         n.classList.add("node-pulsing");
         window.soundEngine?.playBeep(400 + idx * 80, 0.04, 0.02);
       }, idx * 180);
 
-      setTimeout(() => {
+      const t2 = setTimeout(() => {
         n.classList.remove("node-pulsing");
       }, idx * 180 + 350);
+
+      this.simTimeouts.push(t1, t2);
     });
 
-    setTimeout(() => {
+    const endTimer = setTimeout(() => {
       this.isSimulating = false;
+      this.simTimeouts = [];
       if (this.simButton) {
         this.simButton.disabled = false;
         this.simButton.classList.remove("anim-pulse");
@@ -468,6 +494,8 @@ class ArchitectureVisualizer {
       }
       window.soundEngine?.playSuccess();
     }, nodes.length * 180 + 400);
+
+    this.simTimeouts.push(endTimer);
   }
 }
 

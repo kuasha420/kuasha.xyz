@@ -7,14 +7,22 @@ const TERMINAL_COMMANDS = {
   help: () => `
 Available system commands:
   <span class="cmd-hl">whoami</span>        Display operator identity & role overview
+  <span class="cmd-hl">ls</span> / <span class="cmd-hl">ll</span>       List files, directories & career documents
+  <span class="cmd-hl">pwd</span>           Print current working directory
+  <span class="cmd-hl">cat &lt;file&gt;</span>    Read file contents (try: cat cv, cat dossier, cat chickentech)
   <span class="cmd-hl">sitekit</span>       Google Site Kit at scale (3M+ sites, 236 PRs)
   <span class="cmd-hl">jasper</span>        Jasper distributed streaming engine & Hosted SaaS
   <span class="cmd-hl">clinic</span>        18-person clinic co-founding & 100% paperless platform
   <span class="cmd-hl">knot</span>          Knot mesh, MDM9600 mislty daemon & jimha evdev shield
+  <span class="cmd-hl">chickentech</span>   The horizon: IoT edge sensor fabric for precision agriculture
   <span class="cmd-hl">npm</span>           Published open-source libraries (~7,000 monthly downloads)
   <span class="cmd-hl">skills</span>        Technical competencies & architecture matrix
-  <span class="cmd-hl">cv</span>            List all 4 curated resume tracks & direct PDF links
+  <span class="cmd-hl">cv</span> / <span class="cmd-hl">resume</span>    List all 4 curated resume tracks & direct PDF links
   <span class="cmd-hl">download</span>      Download CV (e.g. 'download systems', 'download all')
+  <span class="cmd-hl">theme</span>         Switch color scheme ('theme dark', 'theme light', 'theme')
+  <span class="cmd-hl">audio</span>         Toggle tactile sound clicks ('audio on', 'audio off')
+  <span class="cmd-hl">date</span>          Print live Bangladesh Standard Time (UTC+6)
+  <span class="cmd-hl">uname</span>         Print system kernel & OS architecture string
   <span class="cmd-hl">contact</span>       Direct email, WhatsApp, GitHub & coordinates
   <span class="cmd-hl">matrix</span>        Systems telemetry dump & kernel diagnostics
   <span class="cmd-hl">clear</span>         Clear terminal display buffer
@@ -33,6 +41,153 @@ Highlights:
   • Author of open-source packages downloaded ~7,000 times/month
   • Linux Kernel, Wayland mesh & hardware evdev developer
 `,
+
+  ls: () => `
+<span class="cmd-dim">drwxr-xr-x 4 kuasha kuasha 4096 Oct  6 20:25</span> <span class="cmd-info">architecture/</span>
+<span class="cmd-dim">drwxr-xr-x 2 kuasha kuasha 4096 Oct  6 20:25</span> <span class="cmd-info">resumes/</span>
+<span class="cmd-dim">drwxr-xr-x 2 kuasha kuasha 4096 Oct  6 20:25</span> <span class="cmd-info">opensource/</span>
+<span class="cmd-dim">drwxr-xr-x 2 kuasha kuasha 4096 Oct  6 20:25</span> <span class="cmd-info">skills/</span>
+<span class="cmd-dim">drwxr-xr-x 2 kuasha kuasha 4096 Oct  6 20:25</span> <span class="cmd-info">journey/</span>
+<span class="cmd-dim">-rw-r--r-- 1 kuasha kuasha 148K Oct  6 20:25</span> <span class="cmd-success">Arafat_Zahan_Curriculum_Vitae.pdf</span>
+<span class="cmd-dim">-rw-r--r-- 1 kuasha kuasha 133K Oct  6 20:25</span> <span class="cmd-success">Arafat_Zahan_Systems_Architect_CV.pdf</span>
+<span class="cmd-dim">-rw-r--r-- 1 kuasha kuasha 129K Oct  6 20:25</span> <span class="cmd-success">Arafat_Zahan_Founding_Engineer_CV.pdf</span>
+<span class="cmd-dim">-rw-r--r-- 1 kuasha kuasha 130K Oct  6 20:25</span> <span class="cmd-success">Arafat_Zahan_Staff_FullStack_CV.pdf</span>
+<span class="cmd-dim">-rw-r--r-- 1 kuasha kuasha  13K Oct  6 20:25</span> <span class="cmd-hl">CAREER_DOSSIER.md</span>
+<span class="cmd-dim">-rw-r--r-- 1 kuasha kuasha 2.6K Oct  6 20:25</span> <span class="cmd-hl">README.md</span>
+`,
+
+  ll: () => TERMINAL_COMMANDS.ls(),
+  dir: () => TERMINAL_COMMANDS.ls(),
+
+  pwd: () => `/home/kuasha/systems`,
+
+  uname: () => `Linux kuasha-z490ud 6.12.1-arch1-1 #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux`,
+
+  date: () => {
+    try {
+      return new Intl.DateTimeFormat('en-GB', {
+        dateStyle: 'full',
+        timeStyle: 'long',
+        timeZone: 'Asia/Dhaka'
+      }).format(new Date());
+    } catch {
+      return new Date().toString();
+    }
+  },
+
+  echo: (args) => (args || []).join(" "),
+
+  history: () => {
+    if (!window.terminalConsole || !window.terminalConsole.history.length) {
+      return `<span class="cmd-dim">(no commands executed yet)</span>`;
+    }
+    return window.terminalConsole.history.map((c, i) => `<span class="cmd-dim">${(i + 1).toString().padStart(3, " ")}</span>  ${c}`).join("\n");
+  },
+
+  cat: (args) => {
+    const target = (args[0] || "").toLowerCase();
+    if (!target) return `<span class="cmd-error">Usage: cat &lt;filename&gt; (try: cat cv, cat dossier, cat readme, cat chickentech)</span>`;
+    if (target.includes("cv") || target.includes("resume") || target.includes(".pdf")) {
+      return TERMINAL_COMMANDS.download(["cv"]);
+    }
+    if (target.includes("dossier")) {
+      return `
+<span class="cmd-info">== CAREER DOSSIER SUMMARY (Arafat Zahan) ==</span>
+Principal Systems Architect & Founding Engineer with 6+ years professional software engineering.
+Technical lead on Google Site Kit (3M+ active production sites, 236 merged upstream PRs, Uppie award).
+Lead architect of Jasper distributed media streaming platform (>90% throttle drop).
+Co-founder of Motion Mechanics 18-person clinic (100% paperless platform on Next.js 15, Turborepo, tRPC).
+Published open-source author with ~7,000 monthly npm downloads.
+Full dossier available in /home/kuasha/Documents/CV-Update/CAREER_DOSSIER.md.
+`;
+    }
+    if (target.includes("readme")) {
+      return `
+<span class="cmd-info">== KUASHA.XYZ MANIFESTO ==</span>
+Engineered with vanilla modern web standards • Zero bloated build frameworks • Sub-second latency.
+Canonical home & systems architecture portfolio of Arafat Zahan (kuasha420).
+`;
+    }
+    if (target.includes("chicken")) {
+      return TERMINAL_COMMANDS.chickentech();
+    }
+    return `<span class="cmd-error">cat: ${args[0]}: No such file or directory</span>`;
+  },
+
+  chickentech: () => `
+<span class="cmd-success">== THE HORIZON // CHICKENTECH ==</span>
+Precision Agriculture Edge Automation:
+• Vision: Modern, technologically enhanced, free-range poultry precision agriculture.
+• Edge Hardware: ESP32 microcontrollers, solar-backed edge nodes, MicroPython firmware.
+• Sensor Fabric: Real-time telemetry monitoring temperature, humidity, ammonia, light levels.
+• Edge Automation: Automated ventilation gates, microclimate stabilization, MQTT message bus.
+• Status: Architectural blueprint designed; deploying after high-scale systems tenure.
+`,
+
+  theme: (args) => {
+    const t = (args[0] || "").toLowerCase();
+    if (t === "light") {
+      window.app?.applyTheme("light");
+      localStorage.setItem("color-scheme", "light");
+      return `<span class="cmd-success">✓ Switched theme to LIGHT</span>`;
+    } else if (t === "dark") {
+      window.app?.applyTheme("dark");
+      localStorage.setItem("color-scheme", "dark");
+      return `<span class="cmd-success">✓ Switched theme to DARK</span>`;
+    } else {
+      window.app?.toggleTheme();
+      return `<span class="cmd-success">✓ Toggled theme to ${window.app?.theme.toUpperCase()}</span>`;
+    }
+  },
+
+  audio: (args) => {
+    const a = (args[0] || "").toLowerCase();
+    if (a === "on") {
+      if (!window.app?.audioEnabled) window.app?.toggleAudio();
+      return `<span class="cmd-success">✓ Tactile audio synthesis ENABLED</span>`;
+    } else if (a === "off") {
+      if (window.app?.audioEnabled) window.app?.toggleAudio();
+      return `<span class="cmd-success">✓ Tactile audio synthesis MUTED</span>`;
+    } else {
+      window.app?.toggleAudio();
+      return `<span class="cmd-success">✓ Audio state: ${window.app?.audioEnabled ? "ENABLED" : "MUTED"}</span>`;
+    }
+  },
+
+  projects: () => `
+<span class="cmd-info">== PRODUCTION SYSTEMS SUMMARY ==</span>
+1. <span class="cmd-hl">sitekit</span>   Google Site Kit (3M+ production sites, 236 merged upstream PRs)
+2. <span class="cmd-hl">jasper</span>    Jasper Media Engine (>90% throttle drop via yt-dlp/FFmpeg daemon)
+3. <span class="cmd-hl">clinic</span>    Motion Mechanics & Sunshine Physio (18-person clinic, 100% paperless)
+4. <span class="cmd-hl">knot</span>      Knot Linux/Wayland mesh, mislty modem daemon, jimha evdev shield
+Type the command name (e.g. <span class="cmd-hl">sitekit</span> or <span class="cmd-hl">jasper</span>) for complete architecture briefs.
+`,
+
+  systems: () => TERMINAL_COMMANDS.projects(),
+  resume: (args) => TERMINAL_COMMANDS.cv(args),
+
+  github: () => {
+    window.open("https://github.com/kuasha420", "_blank");
+    return `<span class="cmd-success">✓ Opened https://github.com/kuasha420 in new tab</span>`;
+  },
+
+  linkedin: () => {
+    window.open("https://www.linkedin.com/in/arafat-zahan-a03502394/", "_blank");
+    return `<span class="cmd-success">✓ Opened LinkedIn profile in new tab</span>`;
+  },
+
+  email: () => {
+    window.location.href = "mailto:kuasha420@gmail.com";
+    return `<span class="cmd-success">✓ Opened mail composer for kuasha420@gmail.com</span>`;
+  },
+
+  exit: () => {
+    if (window.terminalConsole && window.terminalConsole.container) {
+      window.terminalConsole.container.innerHTML = "";
+      window.terminalConsole.printInitialBanner();
+    }
+    return "";
+  },
 
   sitekit: () => `
 <span class="cmd-info">== GOOGLE SITE KIT PARTNERSHIP (10up) ==</span>
@@ -122,7 +277,7 @@ Type <span class="cmd-hl">download systems</span> or <span class="cmd-hl">downlo
 `,
 
   download: (args) => {
-    const target = (args[0] || "cv").toLowerCase();
+    const target = ((args && args[0]) || "cv").toLowerCase();
     let file = "assets/pdf/Arafat_Zahan_Curriculum_Vitae.pdf";
     let name = "Curriculum Vitae";
 
@@ -203,6 +358,17 @@ class TerminalConsole {
   }
 
   bindEvents() {
+    // Focus terminal input when clicking anywhere on the terminal window
+    const termWindow = document.querySelector(".terminal-window");
+    if (termWindow) {
+      termWindow.addEventListener("click", (e) => {
+        if (e.target.closest(".terminal-chip") || (window.getSelection && window.getSelection().toString().length > 0)) {
+          return;
+        }
+        this.input.focus();
+      });
+    }
+
     if (this.form) {
       this.form.addEventListener("submit", (e) => {
         e.preventDefault();

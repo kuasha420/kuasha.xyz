@@ -14,31 +14,37 @@
   <meta property="og:url" content="https://kuasha.xyz">
   <meta property="og:title" content="Arafat Zahan — Principal Systems Architect & Founding Engineer">
   <meta property="og:description" content="Technical lead on Google Site Kit (3M+ active sites, 236 merged upstream PRs), architect of Jasper distributed streaming engine, co-founder of Motion Mechanics healthcare platform, open source maintainer (~7k/mo npm downloads).">
-  <meta property="og:image" content="assets/images/me.jpg">
+  <meta property="og:image" content="https://kuasha.xyz/assets/images/me.jpg">
+  <meta property="og:image:width" content="1000">
+  <meta property="og:image:height" content="1233">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Arafat Zahan — Principal Systems Architect & Founding Engineer">
   <meta name="twitter:description" content="Technical lead on Google Site Kit (3M+ active sites, 236 merged upstream PRs), architect of Jasper distributed streaming engine, co-founder of Motion Mechanics healthcare platform.">
-  <meta name="twitter:image" content="assets/images/me.jpg">
+  <meta name="twitter:image" content="https://kuasha.xyz/assets/images/me.jpg">
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <meta name="color-scheme" content="light dark">
 
   <!-- Anti-FOUC Theme Initialization (MANDATORY per Modern Web Guidance) -->
   <script>
-    {
-      const savedTheme = localStorage.getItem("color-scheme");
-      if (savedTheme) {
-        document.documentElement.setAttribute("data-theme", savedTheme);
-        document.querySelector('meta[name="color-scheme"]').content = savedTheme;
-      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        document.documentElement.setAttribute("data-theme", "dark");
-      }
-    }
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem("color-scheme") || localStorage.getItem("theme");
+        const systemPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const activeTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", activeTheme);
+        const meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) meta.content = activeTheme;
+      } catch (e) {}
+    })();
   </script>
 
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+
+  <!-- Accessibility Skip Link -->
+  <a href="#hero" class="skip-link">Skip to main content</a>
 
   <!-- Ambient Background Particle Canvas -->
   <canvas id="bg-canvas"></canvas>
@@ -310,14 +316,22 @@
 
             <div class="resume-actions-row">
               <a href="assets/pdf/Arafat_Zahan_Systems_Architect_CV.pdf" id="resume-track-download-btn" class="btn btn-primary" download>
-                <span>📥</span><span>Download Track PDF</span>
+                <span>📥</span><span>Download Vector PDF</span>
               </a>
-              <a href="assets/pdf/Arafat_Zahan_Curriculum_Vitae.pdf" class="btn btn-secondary" download>
-                <span>📑</span><span>Get Complete CV (148KB)</span>
+              <a href="assets/pdf/Arafat_Zahan_Systems_Architect_CV.pdf" id="resume-track-view-btn" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                <span>👁️</span><span>View PDF in Tab</span>
               </a>
+              <a href="https://github.com/kuasha420/cv-monorepo/blob/main/Arafat_Zahan_Systems_Architect_CV.md" id="resume-track-md-btn" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                <span>📝</span><span>Markdown Source</span>
+              </a>
+            </div>
+            <div style="margin-top: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
               <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">
-                Verified against git ledgers & official records
+                ✓ Vector A4 precision • Factually verified against GitHub API & official records
               </span>
+              <a href="assets/pdf/Arafat_Zahan_Curriculum_Vitae.pdf" class="btn btn-outline-cyan btn-sm" download>
+                <span>📑</span><span>Get Complete Unrestricted CV (148KB)</span>
+              </a>
             </div>
           </div>
         </div>
@@ -501,6 +515,85 @@
             </div>
           </div>
         </div>
+
+        <!-- INTERACTIVE LABS & PRESERVED ARCHIVES -->
+        <div style="margin-top: 56px;">
+          <div class="section-header" style="margin-bottom: 24px;">
+            <span class="section-tag">Interactive Archives</span>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Standalone Interactive Labs & Visualizers</h3>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 680px;">
+              Preserved standalone web tools, clinical simulators, and data visualization experiments hosted on the portfolio mesh.
+            </p>
+          </div>
+
+          <div class="labs-grid">
+            <a href="https://kuasha420.github.io/mm-patient-flow.html" target="_blank" rel="noopener noreferrer" class="lab-card">
+              <div class="lab-card-top">
+                <span class="lab-card-badge">Clinical Simulation</span>
+                <h4 class="lab-card-title">Motion Mechanics Patient Flow Simulator</h4>
+                <p class="lab-card-desc">Interactive clinical care triage, multi-disciplinary plinth allocation, and rehabilitation queue modeling tool.</p>
+              </div>
+              <div class="lab-card-footer">
+                <span>Launch Simulator</span> <span>↗</span>
+              </div>
+            </a>
+
+            <a href="https://kuasha420.github.io/invest.html" target="_blank" rel="noopener noreferrer" class="lab-card">
+              <div class="lab-card-top">
+                <span class="lab-card-badge">FinTech & Modeling</span>
+                <h4 class="lab-card-title">Financial Investment Platform</h4>
+                <p class="lab-card-desc">Dynamic multi-asset allocation, risk tolerance profiling, and compound portfolio return projection calculator.</p>
+              </div>
+              <div class="lab-card-footer">
+                <span>Launch Platform</span> <span>↗</span>
+              </div>
+            </a>
+
+            <a href="https://kuasha420.github.io/constitution-bn-infographic.html" target="_blank" rel="noopener noreferrer" class="lab-card">
+              <div class="lab-card-top">
+                <span class="lab-card-badge">Data Visualization</span>
+                <h4 class="lab-card-title">Bangladesh Constitution Infographic</h4>
+                <p class="lab-card-desc">Interactive structural and historical exploration of the articles of the Constitution of Bangladesh with bilingual cues.</p>
+              </div>
+              <div class="lab-card-footer">
+                <span>View Infographic</span> <span>↗</span>
+              </div>
+            </a>
+
+            <a href="https://kuasha420.github.io/ppp-detailed.html" target="_blank" rel="noopener noreferrer" class="lab-card">
+              <div class="lab-card-top">
+                <span class="lab-card-badge">Macroeconomics</span>
+                <h4 class="lab-card-title">Purchasing Power Parity Analysis</h4>
+                <p class="lab-card-desc">Comparative macroeconomic analysis of currency purchasing parity, basket of goods metrics, and exchange rates.</p>
+              </div>
+              <div class="lab-card-footer">
+                <span>Explore Analysis</span> <span>↗</span>
+              </div>
+            </a>
+
+            <a href="https://kuasha420.github.io/game.html" target="_blank" rel="noopener noreferrer" class="lab-card">
+              <div class="lab-card-top">
+                <span class="lab-card-badge">Canvas Prototype</span>
+                <h4 class="lab-card-title">Canvas Interactive Game Engine</h4>
+                <p class="lab-card-desc">High-framerate HTML5 2D canvas physics simulation and interactive game mechanics prototype.</p>
+              </div>
+              <div class="lab-card-footer">
+                <span>Play Prototype</span> <span>↗</span>
+              </div>
+            </a>
+
+            <a href="https://kuasha420.github.io/report.html" target="_blank" rel="noopener noreferrer" class="lab-card">
+              <div class="lab-card-top">
+                <span class="lab-card-badge">Analytical Dossier</span>
+                <h4 class="lab-card-title">Technical Briefings & Research Reports</h4>
+                <p class="lab-card-desc">Consolidated engineering briefings, architectural evaluations, and interactive analytical dossiers.</p>
+              </div>
+              <div class="lab-card-footer">
+                <span>Read Reports</span> <span>↗</span>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -625,6 +718,44 @@
               <p class="timeline-desc">
                 Started building software and exploring Linux kernels in 2012. Conferred 4-Year Diploma in Computer Technology. Built open-source WordPress plugins published to WordPress.org (2014), raw PHP B2B licensing engines with cryptographic verification, and early hybrid mobile applications (Cordova/PhoneGap) on bare-metal Linux servers.
               </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- HUMAN DIMENSIONS & CHICKENTECH SHOWCASE -->
+        <div class="story-block" id="chickentech">
+          <div class="story-content">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;">
+              <span class="section-tag" style="margin-bottom: 0;">Philosophy & Foundations</span>
+              <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">Savar, Dhaka • Building Software Since 2012</span>
+            </div>
+            <h3 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">
+              Systems Built to Endure Real-World Pressure
+            </h3>
+            <p>
+              My journey began in 2012 as an inquisitive teenager in Savar exploring Linux kernels, bare-metal servers, and open-source software. After earning a <strong>4-Year Diploma in Computer Technology</strong> (conferred 2017) and completing comprehensive Red Hat Enterprise Linux (RHCE curriculum) and Cisco (CCNA curriculum) systems curricula, I entered the industry driven by unyielding curiosity.
+            </p>
+            <p>
+              Along the way, defining life priorities took precedence: during my university degree, I chose to pause after 6 of 10 completed semesters to ensure my wife Rehola could complete her own Computer Science & Engineering degree without interruption through pregnancy and motherhood, as we welcomed our daughter <strong>JimHa</strong>. Balancing high-stakes production delivery at 10up with family education crystallized my pragmatic approach to systems: <em>architecting software that genuinely endures under real-world pressure rather than theoretical perfection</em>.
+            </p>
+            <p>
+              From authoring Google-approved design documents for <strong>Google Site Kit</strong> in Reykjavik to pouring concrete and configuring treatment plinths for <strong>Motion Mechanics</strong> on CRP Road, I approach every engineering problem with direct, accountable, hands-on execution.
+            </p>
+
+            <div class="chickentech-callout">
+              <div class="chickentech-title">
+                <span>🐔</span> The Long-Term Horizon: ChickenTech
+              </div>
+              <div class="chickentech-text">
+                Before eventually retiring to a modern, technologically enhanced, free-range chicken farm—<strong>ChickenTech</strong>—where I plan to deploy distributed ESP32 edge sensor networks (temperature, humidity, ammonia, light levels), automated microclimate ventilation actuators, and solar-backed MQTT telemetry buses, I remain dedicated to architecting mission-critical platforms and solving high-scale challenges for world-class engineering teams.
+              </div>
+              <div class="chickentech-chips">
+                <span class="tech-tag">ESP32 / MicroPython</span>
+                <span class="tech-tag">MQTT Edge Bus</span>
+                <span class="tech-tag">Solar Failover Telemetry</span>
+                <span class="tech-tag">Microclimate Actuation</span>
+                <span class="tech-tag">TimescaleDB</span>
+              </div>
             </div>
           </div>
         </div>

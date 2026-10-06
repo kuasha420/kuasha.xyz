@@ -28,18 +28,27 @@ class App {
 
   /* ----------------- THEME ENGINE ----------------- */
   initTheme() {
-    const savedTheme = localStorage.getItem("color-scheme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    let savedTheme = null;
+    try {
+      savedTheme = localStorage.getItem("color-scheme") || localStorage.getItem("theme");
+    } catch {}
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
     this.theme = savedTheme || (prefersDark ? "dark" : "light");
 
     this.applyTheme(this.theme);
 
     // Watch system changes
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("color-scheme")) {
-        this.applyTheme(e.matches ? "dark" : "light");
-      }
-    });
+    if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        let stored = null;
+        try {
+          stored = localStorage.getItem("color-scheme") || localStorage.getItem("theme");
+        } catch {}
+        if (!stored) {
+          this.applyTheme(e.matches ? "dark" : "light");
+        }
+      });
+    }
 
     // Bind toggle buttons
     const toggles = document.querySelectorAll(".theme-toggle-btn");
@@ -64,7 +73,10 @@ class App {
 
   toggleTheme() {
     const nextTheme = this.theme === "dark" ? "light" : "dark";
-    localStorage.setItem("color-scheme", nextTheme);
+    try {
+      localStorage.setItem("color-scheme", nextTheme);
+      localStorage.setItem("theme", nextTheme);
+    } catch {}
     this.applyTheme(nextTheme);
     window.soundEngine?.playClick();
     this.showToast(`Switched to ${nextTheme} theme`);
@@ -137,13 +149,14 @@ class App {
       });
     });
 
-    // Mobile nav menu drawer
+    // Mobile nav menu drawer with body scroll lock
     const menuBtn = document.getElementById("mobile-menu-btn");
     const mobileDrawer = document.getElementById("mobile-nav-drawer");
     if (menuBtn && mobileDrawer) {
       menuBtn.addEventListener("click", () => {
         const isOpen = mobileDrawer.classList.toggle("is-open");
         menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        document.body.style.overflow = isOpen ? "hidden" : "";
         window.soundEngine?.playClick();
       });
 
@@ -151,6 +164,7 @@ class App {
         a.addEventListener("click", () => {
           mobileDrawer.classList.remove("is-open");
           menuBtn.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
         });
       });
     }
@@ -159,6 +173,10 @@ class App {
     const audioBtn = document.getElementById("audio-toggle-btn");
     if (audioBtn) {
       audioBtn.addEventListener("click", () => this.toggleAudio());
+      if (window.soundEngine?.enabled) {
+        this.audioEnabled = true;
+        document.querySelectorAll(".audio-toggle-icon").forEach(i => i.textContent = "🔊");
+      }
     }
   }
 
@@ -169,6 +187,7 @@ class App {
         title: "Principal Systems Architect",
         tagline: "High-scale web platforms, distributed media engines & fault-tolerant cluster architectures.",
         pdfUrl: "assets/pdf/Arafat_Zahan_Systems_Architect_CV.pdf",
+        mdUrl: "https://github.com/kuasha420/cv-monorepo/blob/main/Arafat_Zahan_Systems_Architect_CV.md",
         keyFocus: [
           "Google Site Kit technical lead at 10up (3M+ active production websites, 236 merged upstream PRs)",
           "Jasper distributed streaming engine with externalized yt-dlp/FFmpeg daemon (>90% throttle reduction)",
@@ -180,6 +199,7 @@ class App {
         title: "Founding Engineer / Head of Eng",
         tagline: "Zero-to-one company building, commercial clinic launches & cross-functional leadership.",
         pdfUrl: "assets/pdf/Arafat_Zahan_Founding_Engineer_CV.pdf",
+        mdUrl: "https://github.com/kuasha420/cv-monorepo/blob/main/Arafat_Zahan_Founding_Engineer_CV.md",
         keyFocus: [
           "Co-founded Motion Mechanics physical rehabilitation clinic: commercial buildout, P&L & 18-person team",
           "Engineered 100% paperless clinical operating platform with Next.js 15, Turborepo, tRPC & PostgreSQL",
@@ -191,6 +211,7 @@ class App {
         title: "Staff Full-Stack Engineer",
         tagline: "End-to-end type safety, modern React/Next.js architectures, DX leadership & design systems.",
         pdfUrl: "assets/pdf/Arafat_Zahan_Staff_FullStack_CV.pdf",
+        mdUrl: "https://github.com/kuasha420/cv-monorepo/blob/main/Arafat_Zahan_Staff_FullStack_CV.md",
         keyFocus: [
           "Authored Google-approved technical design documents for User Input v2 and Ad Blocking Recovery",
           "Deep TypeScript training authoring, CSS Modules discipline lead, and 'Mid-Point Review' innovation",
@@ -202,6 +223,7 @@ class App {
         title: "Comprehensive Curriculum Vitae",
         tagline: "Full unabridged career chronicle, technical training, publications, education & awards.",
         pdfUrl: "assets/pdf/Arafat_Zahan_Curriculum_Vitae.pdf",
+        mdUrl: "https://github.com/kuasha420/cv-monorepo/blob/main/Arafat_Zahan_Curriculum_Vitae.md",
         keyFocus: [
           "Complete historical documentation spanning 2012 open-source origins through October 2026",
           "10up Summit 'Uppie' Award Winner (Reykjavik, Iceland) for Google Site Kit excellence",
@@ -216,6 +238,8 @@ class App {
     const trackTagline = document.getElementById("resume-track-tagline");
     const trackHighlights = document.getElementById("resume-track-highlights");
     const downloadBtn = document.getElementById("resume-track-download-btn");
+    const viewBtn = document.getElementById("resume-track-view-btn");
+    const mdBtn = document.getElementById("resume-track-md-btn");
 
     if (!tabButtons.length || !trackTitle) return;
 
@@ -232,8 +256,19 @@ class App {
 
       trackTitle.textContent = track.title;
       trackTagline.textContent = track.tagline;
-      downloadBtn.href = track.pdfUrl;
-      downloadBtn.download = track.pdfUrl.split("/").pop();
+
+      if (downloadBtn) {
+        downloadBtn.href = track.pdfUrl;
+        downloadBtn.download = track.pdfUrl.split("/").pop();
+      }
+
+      if (viewBtn) {
+        viewBtn.href = track.pdfUrl;
+      }
+
+      if (mdBtn) {
+        mdBtn.href = track.mdUrl;
+      }
 
       if (trackHighlights) {
         trackHighlights.innerHTML = track.keyFocus.map(item => `
@@ -408,10 +443,16 @@ class App {
     let width, height;
     let particles = [];
     const particleCount = 45;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     window.addEventListener("resize", resize, { passive: true });
